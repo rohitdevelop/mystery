@@ -1,18 +1,18 @@
 import { resend } from "../lib/resend";
-import VarificationEmail from "../../emails/VarificationEmail";
+import VarificationEmail from "@/src/emails/VarificationEmail";
 import { Apiresponse } from "@/src/types/ApiResponse";
 
 export async function sendVarificationEmail(
-  username: string,
   email: string,
-  varifycode: string
+  username: string,
+  verifyCode: string
 ): Promise<Apiresponse> {
   try {
     await resend.emails.send({
-      from: "rohitdev124421@gmial.com",
+      from: "Mystry <onboarding@resend.dev>",
       to: email,
       subject: "mystry message | varification code",
-      react: VarificationEmail({ username, otp: varifycode }),
+      react: VarificationEmail({ username, otp: verifyCode }),
     });
     return { success: true, message: "successfull email send" };
   } catch (EmailError) {

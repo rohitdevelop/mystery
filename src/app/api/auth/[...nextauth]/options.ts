@@ -25,7 +25,7 @@ export const authOptions: NextAuthOptions = {
           if (!user) {
             throw new Error("No user not found");
           }
-          if (!user.isverified) {
+          if (!user.isVerified) {
             throw new Error("user not varified");
           }
 
