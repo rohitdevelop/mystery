@@ -7,4 +7,5 @@ export const signInSchema = z.object({
     .string()
     .min(6, { message: "must be 6 charater" })
     .max(8, "no more then 8 charater"),
+      identifier: z.string().min(2, "Enter username or email"),
 })

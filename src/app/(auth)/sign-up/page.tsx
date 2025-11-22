@@ -71,8 +71,8 @@ const SignupPage = () => {
   const onSubmit = async (data: z.infer<typeof signUpSchema>) => {
     setIsSubmitting(true);
     try {
-      const respose = await axios.post<Apiresponse>("/api/sign-up", data);
-      toast.success(respose.data.message);
+      const response = await axios.post<Apiresponse>("/api/sign-up", data);
+      toast.success(response.data.message);
       router.replace(`/verify/${username}`);
     } catch (error) {
       const axioserror = error as AxiosError<Apiresponse>;
@@ -159,7 +159,7 @@ const SignupPage = () => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-200 flex justify-center items-center gap-2 disabled:opacity-50"
+              className="w-full py-3 bg-black text-white font-semibold rounded-lg hover:bg-black transition duration-200 flex justify-center items-center gap-2 disabled:opacity-50"
             >
               {isSubmitting ? (
                 <>
@@ -175,7 +175,7 @@ const SignupPage = () => {
         {/* Footer */}
         <div className="mt-4 text-center text-gray-500 text-sm">
           Already have an account?{" "}
-          <span className="text-blue-600 hover:underline cursor-pointer">
+          <span className="text-black  hover:underline font-semibold cursor-pointer">
             Sign in
           </span>
         </div>
