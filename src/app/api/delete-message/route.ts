@@ -1,62 +1,73 @@
-// import { getServerSession } from "next-auth";
-// import { authOptions } from "../auth/[...nextauth]/options";
-// import dbConnect from "@/src/lib/dbconnect";
-// import Usermodel from "@/src/models/User";
-// import { User } from "next-auth";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../auth/[...nextauth]/options";
+import dbConnect from "@/src/lib/dbconnect";
+import Usermodel from "@/src/models/User";
+import { User } from "next-auth";
 
-// export async function DELETE(request: Request) {
-//   try {
-//     await dbConnect();
+export async function POST(request: Request) {
+  await dbConnect();
+  const session = await getServerSession(authOptions);
+  const user: User = session?.user as User;
+  if (!session || !session?.user) {
+    return Response.json(
+      {
+        sussess: false,
+        message: "Not authenticated",
+      },
+      { status: 401 }
+    );
+  }
+  const userId = user._id;
+  const { acceptMessages } = await request.json();
 
-//     const session = await getServerSession(authOptions);
-//     const user: User = session?.user as User;
+ 
+}
 
-//     // ---- Authentication Check ----
-//     if (!session || !session.user) {
-//       return Response.json(
-//         { success: false, message: "Not authenticated" },
-//         { status: 401 }
-//       );
-//     }
+export async function GET(request: Request) {
+  await dbConnect();
+  const session = await getServerSession(authOptions);
+  const user: User = session?.user as User;
+  if (!session || !session?.user) {
+    return Response.json(
+      {
+        sussess: false,
+        message: "Not authenticated",
+      },
+      { status: 401 }
+    );
+  }
+  const userId = user._id;
 
-//     const userId = user._id;
+  try {
+    const foundUser = await Usermodel.findById(userId);
+    if (!foundUser) {
+      return Response.json(
+        {
+          sussess: false,
+          message: "faild to found the user",
+        },
+        { status: 404 }
+      );
+    } else {
+      return Response.json(
+        {
+          sussess: true,
+          isAcceptingMessage: foundUser.isAcceptingMessage,
 
-//     // ---- BODY ----
-//     const { deleteMessages } = await request.json();
+          message: "faild to found the user",
+        },
+        { status: 200 }
+      );
+    }
+  } catch (error) {
+    console.error("faild to update", error);
 
-//     if (!deleteMessages || !Array.isArray(deleteMessages)) {
-//       return Response.json(
-//         { success: false, message: "deleteMessages must be an array of IDs" },
-//         { status: 400 }
-//       );
-//     }
-
-//     // ---- Delete Messages from User ----
-//     const updatedUser = await Usermodel.findByIdAndUpdate(
-//       userId,
-//       {
-//         $pull: {
-//           messages: {
-//             _id: { $in: deleteMessages }, // delete multiple messages
-//           },
-//         },
-//       },
-//       { new: true }
-//     );
-
-//     return Response.json(
-//       {
-//         success: true,
-//         message: "Messages deleted successfully",
-//         user: updatedUser,
-//       },
-//       { status: 200 }
-//     );
-//   } catch (error) {
-//     console.error("DELETE ERROR:", error);
-//     return Response.json(
-//       { success: false, message: "Server Error", error: error },
-//       { status: 500 }
-//     );
-//   }
-// }
+    return Response.json(
+      {
+        sussess: false,
+        message: "Error in getting message acceptance status",
+      },
+      { status: 500 }
+    );
+  }
+}
