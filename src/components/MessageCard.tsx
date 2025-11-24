@@ -18,7 +18,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+} from "@/src/components/ui/alert-dialog";
 import { Button } from "./ui/button";
 import { X } from "lucide-react";
 import { toast } from "react-hot-toast";

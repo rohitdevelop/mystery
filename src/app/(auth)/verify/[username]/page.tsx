@@ -11,8 +11,8 @@ import axios, { AxiosError } from "axios";
 import { Apiresponse } from "@/src/types/ApiResponse";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/src/components/ui/form";
 import { Input } from "@/src/components/ui/input";
-import { Button } from "@react-email/components";
-
+import { Button } from "@/src/components/ui/button";
+ 
 const VerifyAccount = () => {
   const router = useRouter();
   const params = useParams<{ username: string }>();
@@ -67,7 +67,7 @@ const VerifyAccount = () => {
             </FormItem>
           )}
         />
-        <Button className="bg-black text-white rounded-2xl p-3 font-semibold" type="submit">Submit</Button>
+        <Button  className="bg-black text-white rounded-2xl p-3 font-semibold" type="submit">Submit</Button>
       </form>
     </Form>
   
